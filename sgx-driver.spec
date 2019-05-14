@@ -1,11 +1,11 @@
-Name:		  sgx-driver
-Version:	2.5
-Release:	0%{?dist}.1
-Summary:	Intel SGX kernel module
+Name:     sgx-driver
+Version:  2.5
+Release:  0%{?dist}.1
+Summary:  Intel SGX kernel module
 
-License:	GPLv2
-URL:		  https://github.com/intel/linux-sgx-driver
-#Source0:	https://github.com/intel/linux-sgx-driver/archive/sgx_driver_2.5.tar.gz
+License:  GPLv2
+URL:      https://github.com/intel/linux-sgx-driver
+#Source0: https://github.com/intel/linux-sgx-driver/archive/sgx_driver_2.5.tar.gz
 
 ExclusiveArch: i686 x86_64
 Provides:      %{name}-kmod-common = %{version}
