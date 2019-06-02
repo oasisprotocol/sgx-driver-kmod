@@ -6,10 +6,9 @@
 
 %define repo rpmfusion
 
-# name should have a -kmod suffix
 Name:           sgx-driver-kmod
 Version:        2.5
-Release:        1%{?dist}.1
+Release:        2%{?dist}.1
 Summary:        Intel SGX kernel module
 Group:          System Environment/Kernel
 License:        GPLv2
@@ -20,16 +19,8 @@ Source0:        https://github.com/intel/linux-sgx-driver/archive/sgx_driver_2.5
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  %{_bindir}/kmodtool
 Packager:       Yawning Angel <yawning@schwanenlied.me>
-
-# Verify that the package build for all architectures.
-# In most time you should remove the Exclusive/ExcludeArch directives
-# and fix the code (if needed).
+Patch1:         0001-sgx_vma-return-unsigned-int-from-sgx_vma_fault.patch
 ExclusiveArch: i686 x86_64
-# ExcludeArch: i686 x86_64 ppc64 ppc64le armv7hl aarch64
-
-# get the proper build-sysbuild package from the repo, which
-# tracks in all the kernel-devel packages
-BuildRequires:  %{_bindir}/kmodtool
 
 %{!?kernels:BuildRequires: buildsys-build-rpmfusion-kerneldevpkgs-%{?buildforkernels:%{buildforkernels}}%{!?buildforkernels:current}-%{_target_cpu} }
 
@@ -46,6 +37,7 @@ The linux-sgx-driver project hosts the out-of-tree driver for the Linux
 Intel(R) SGX software stack, which will be used until the driver upstreaming
 process is complete.
 
+
 %prep
 echo "%SHA256SUM0 %SOURCE0" | sha256sum -c -
 # error out if there was something wrong with kmodtool
@@ -56,10 +48,10 @@ kmodtool  --target %{_target_cpu}  --repo %{repo} --kmodname %{name} %{?buildfor
 
 %setup -q -c -T -a 0
 
-# apply patches and do other stuff here
-# pushd foo-%{version}
-# #patch0 -p1 -b .suffix
-# popd
+pwd
+pushd linux-sgx-driver-sgx_driver_%{version}
+%patch1 -p1
+popd
 
 for kernel_version in %{?kernel_versions} ; do
     cp -a linux-sgx-driver-sgx_driver_%{version} _kmod_build_${kernel_version%%___*}
@@ -76,8 +68,6 @@ done
 rm -rf ${RPM_BUILD_ROOT}
 
 for kernel_version in %{?kernel_versions}; do
-    # make install DESTDIR=${RPM_BUILD_ROOT} KMODPATH=%{kmodinstdir_prefix}/${kernel_version%%___*}/%{kmodinstdir_postfix}
-    # install -D -m 755 _kmod_build_${kernel_version%%___*}/foo/foo.ko  ${RPM_BUILD_ROOT}%{kmodinstdir_prefix}/${kernel_version%%___*}/%{kmodinstdir_postfix}/foo.ko
     install -D -m 755 _kmod_build_${kernel_version%%___*}/isgx.ko ${RPM_BUILD_ROOT}%{kmodinstdir_prefix}/${kernel_version%%___*}/%{kmodinstdir_postfix}/isgx.ko
 done
 %{?akmod_install}
@@ -88,5 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jun 02 2019 Yawning Angel <yawning@schwanenlied.me> - 2.5-2
+- Cherry pick changes to fix the build on kernel 5.1.x.
 * Tue May 14 2019 Yawning Angel <yanwing@schwanenlied.me> - 2.5-1
 - Initial RPM release.
