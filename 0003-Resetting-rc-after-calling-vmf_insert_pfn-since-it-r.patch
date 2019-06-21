@@ -1,0 +1,26 @@
+From 44adf289ead269f8d56a99ef5980decc3c74707c Mon Sep 17 00:00:00 2001
+From: Serge Ayoun <serge.ayoun@intel.com>
+Date: Wed, 15 May 2019 15:31:52 +0300
+Subject: [PATCH 3/5] Resetting rc after calling vmf_insert_pfn since it
+ returns VM_FAULT_NOPAGE upon success and for kernels 4.20 and later
+
+Signed-off-by: Serge Ayoun <serge.ayoun@intel.com>
+---
+ sgx_util.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/sgx_util.c b/sgx_util.c
+index e9742d3..25b18a9 100644
+--- a/sgx_util.c
++++ b/sgx_util.c
+@@ -334,6 +334,7 @@ static struct sgx_encl_page *sgx_do_fault(struct vm_area_struct *vma,
+ 		goto out;
+ 	}
+ 
++	rc = 0;
+ 	sgx_test_and_clear_young(entry, encl);
+ out:
+ 	mutex_unlock(&encl->lock);
+-- 
+2.21.0
+

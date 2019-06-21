@@ -8,7 +8,7 @@
 
 Name:           sgx-driver-kmod
 Version:        2.5
-Release:        2%{?dist}.1
+Release:        3%{?dist}.1
 Summary:        Intel SGX kernel module
 Group:          System Environment/Kernel
 License:        GPLv2
@@ -19,7 +19,10 @@ Source0:        https://github.com/intel/linux-sgx-driver/archive/sgx_driver_2.5
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  %{_bindir}/kmodtool
 Packager:       Yawning Angel <yawning@schwanenlied.me>
-Patch1:         0001-sgx_vma-return-unsigned-int-from-sgx_vma_fault.patch
+Patch1:         0001-For-kernel-5.1-and-higher-sgx_vma_fault-returns-unsi.patch
+Patch3:         0003-Resetting-rc-after-calling-vmf_insert_pfn-since-it-r.patch
+Patch5:         0005-Fix-configid-offset-in-secs.patch
+
 ExclusiveArch: i686 x86_64
 
 %{!?kernels:BuildRequires: buildsys-build-rpmfusion-kerneldevpkgs-%{?buildforkernels:%{buildforkernels}}%{!?buildforkernels:current}-%{_target_cpu} }
@@ -51,6 +54,8 @@ kmodtool  --target %{_target_cpu}  --repo %{repo} --kmodname %{name} %{?buildfor
 pwd
 pushd linux-sgx-driver-sgx_driver_%{version}
 %patch1 -p1
+%patch3 -p1
+%patch5 -p1
 popd
 
 for kernel_version in %{?kernel_versions} ; do
@@ -78,6 +83,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jun 21 2019 Yawning Angel <yawning@schwanenlied.me> - 2.5-3
+- Cherry pick bug fixes from upstream.
 * Sun Jun 02 2019 Yawning Angel <yawning@schwanenlied.me> - 2.5-2
 - Cherry pick changes to fix the build on kernel 5.1.x.
 * Tue May 14 2019 Yawning Angel <yanwing@schwanenlied.me> - 2.5-1
