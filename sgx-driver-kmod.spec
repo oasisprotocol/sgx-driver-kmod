@@ -7,21 +7,18 @@
 %define repo rpmfusion
 
 Name:           sgx-driver-kmod
-Version:        2.5
-Release:        3%{?dist}.1
+Version:        2.6
+Release:        1%{?dist}.1
 Summary:        Intel SGX kernel module
 Group:          System Environment/Kernel
 License:        GPLv2
 URL:            https://github.com/intel/linux-sgx-driver
 %undefine _disable_source_fetch
-Source0:        https://github.com/intel/linux-sgx-driver/archive/sgx_driver_2.5.tar.gz
-%define         SHA256SUM0 4f0ee81eb1e8c1bda30a9adce0b5fffae38c0b246b7859a396c6df9af653e0e3
+Source0:        https://github.com/intel/linux-sgx-driver/archive/4f5bb63a99b785f03bb6a03dc5402e99691b849b.tar.gz
+%define         SHA256SUM0 713e4fea8991fb3391b3c8d718776f6c3d2fe2821e9c358ac2448e1083fe5c53
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  %{_bindir}/kmodtool
 Packager:       Yawning Angel <yawning@schwanenlied.me>
-Patch1:         0001-For-kernel-5.1-and-higher-sgx_vma_fault-returns-unsi.patch
-Patch3:         0003-Resetting-rc-after-calling-vmf_insert_pfn-since-it-r.patch
-Patch5:         0005-Fix-configid-offset-in-secs.patch
 
 ExclusiveArch: i686 x86_64
 
@@ -52,14 +49,11 @@ kmodtool  --target %{_target_cpu}  --repo %{repo} --kmodname %{name} %{?buildfor
 %setup -q -c -T -a 0
 
 pwd
-pushd linux-sgx-driver-sgx_driver_%{version}
-%patch1 -p1
-%patch3 -p1
-%patch5 -p1
-popd
 
 for kernel_version in %{?kernel_versions} ; do
-    cp -a linux-sgx-driver-sgx_driver_%{version} _kmod_build_${kernel_version%%___*}
+    # Fucking Intel bumped the version but didn't tag.
+    # cp -a linux-sgx-driver-sgx_driver_%{version} _kmod_build_${kernel_version%%___*}
+    cp -a linux-sgx-driver-4f5bb63a99b785f03bb6a03dc5402e99691b849b _kmod_build_${kernel_version%%___*}
 done
 
 
@@ -83,6 +77,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Oct 17 2019 Yawning Angel <yawning@schwanenlied.me> - 2.6-1
+- Update to upstream release 2.6.
 * Fri Jun 21 2019 Yawning Angel <yawning@schwanenlied.me> - 2.5-3
 - Cherry pick bug fixes from upstream.
 * Sun Jun 02 2019 Yawning Angel <yawning@schwanenlied.me> - 2.5-2

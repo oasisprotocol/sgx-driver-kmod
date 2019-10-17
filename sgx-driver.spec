@@ -1,5 +1,5 @@
 Name:     sgx-driver
-Version:  2.5
+Version:  2.6
 Release:  0%{?dist}.1
 Summary:  Intel SGX kernel module
 
@@ -26,5 +26,7 @@ Intel SGX kernel moduule common files.
 %files
 
 %changelog
+* Thu Oct 17 2019 Yawning Angel <yawning@schwanenlied.me> - 2.6-1
+- Update to upstream release 2.6.
 * Tue May 14 2019 Yawning Angel <yanwing@schwanenlied.me> - 2.5-1
 - Initial RPM release.
