@@ -13,7 +13,6 @@ Summary:        Intel SGX kernel module
 Group:          System Environment/Kernel
 License:        GPLv2
 URL:            https://github.com/intel/linux-sgx-driver
-%undefine _disable_source_fetch
 Source0:        https://github.com/intel/linux-sgx-driver/archive/sgx_driver_2.6.tar.gz
 %define         SHA256SUM0 95b4a9099582a8d49b561d3a7ea910a4f935bb9c92f3f691028797fb1c9c14db
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
