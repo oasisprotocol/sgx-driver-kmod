@@ -11,8 +11,8 @@
 %global debug_package %{nil}
 
 # Uncomment the following to use a pre-release.
-#global git_date 20210420
-#global git_commit 2d2b795890c01069aab21d4cdfd1226f7f65b971
+%global git_date 20210420
+%global git_commit 2d2b795890c01069aab21d4cdfd1226f7f65b971
 %{?git_commit:%global git_commit_hash %(c=%{git_commit}; echo ${c:0:7})}
 
 %if 0%{?git_date}
@@ -22,7 +22,7 @@
 %endif
 
 # SHA256sum of Source0.
-%global SHA256SUM0 806778a1d5fe408dc520330c7eae185e0b67f313c32f594816f16063ac49d5b6
+%global SHA256SUM0 bd6888a20ac14559c67a6f9923ca8f259a90240acdccb640bca0cf1f36476a90
 
 Name: sgx-driver-kmod
 Version: 2.11
@@ -85,6 +85,9 @@ done
 
 
 %changelog
+* Mon Jun 14 2021 Tadej Janež <tadej.j@nez.si> - 2.11-1.20210420git2d2b795
+- Update to upstream commit 2d2b795 (Apr 20, 2021)
+
 * Mon Jun 14 2021 Tadej Janež <tadej.j@nez.si> - 2.11-1
 - Add support for packaging pre-releases (i.e. arbitrary git commits)
 
