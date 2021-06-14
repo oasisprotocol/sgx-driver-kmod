@@ -1,6 +1,6 @@
 Name: sgx-driver
-Version: 2.6
-Release: 2%{?dist}
+Version: 2.11
+Release: 1%{?dist}
 Summary: Intel SGX kernel module
 License: GPLv2
 
@@ -26,6 +26,9 @@ Intel SGX kernel moduule common files.
 %files
 
 %changelog
+* Mon Jun 14 2021 Tadej Janež <tadej.j@nez.si> - 2.11-1
+- Update to upstream release 2.11.
+
 * Mon Jun 14 2021 Tadej Janež <tadej.j@nez.si> - 2.6-2
 - Refactor and modernize the SPEC file.
 
