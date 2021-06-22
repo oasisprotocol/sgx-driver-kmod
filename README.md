@@ -36,8 +36,25 @@ This will pull in 2 packages
 To verify that the Intel SGX Linux driver has been properly installed and is
 working, you can use the `sgx-detect` tool from the [sgxs-tools] Rust package.
 
+There are no pre-built packages for it, so you will need to compile it yourself.
+
 _NOTE: The sgxs-tools package must be compiled with a nightly version of the
 Rust toolchain since they use the `#![feature]` macro._
+
+### Install Dependencies
+
+Make sure you have the following installed on your system:
+
+- [GCC].
+- [Protobuf] compiler.
+- [pkg-config].
+- [OpenSSL] development package.
+
+You can install them by running:
+
+```
+sudo dnf install gcc protobuf-compiler pkg-config openssl-devel
+```
 
 ### Install Rust Nightly
 
@@ -58,6 +75,12 @@ _NOTE: If you want to avoid directly executing a shell script fetched the
 internet, you can also [download `rustup-init` executable for your platform][
 rustup-init-download] and run it manually. This will run `rustup-init` which
 will download and install the latest stable version of Rust on your system._
+
+Install the nightly version of the Rust toolchain with:
+
+```
+rustup install nightly
+```
 
 ### Build and Install sgxs-tools
 
@@ -80,6 +103,10 @@ When the SGX driver is properly installed, you should see the green ✔ for the
 [Kmods2 standard]: https://rpmfusion.org/Packaging/KernelModules/Kmods2
 [copr-repo]: https://copr.fedorainfracloud.org/coprs/tadej/sgx-driver-kmod/
 [sgxs-tools]: https://lib.rs/crates/sgxs-tools
+[GCC]: http://gcc.gnu.org/
+[Protobuf]: https://github.com/protocolbuffers/protobuf
+[pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config
+[OpenSSL]: https://www.openssl.org/
 [fedora-rust-nightly]:
   https://github.com/developer-portal/content/blob/master/tech/languages/rust/further-reading.md#other-useful-links
 [rustup]: https://rustup.rs/
