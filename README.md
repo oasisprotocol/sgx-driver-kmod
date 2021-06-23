@@ -1,5 +1,10 @@
 # Fedora Package for the Legacy Intel SGX Linux Driver
 
+| Package         | Copr build status                                                              |
+|:---------------:|:------------------------------------------------------------------------------:|
+| sgx-driver-kmod | [![sgx-driver-kmod build status][sgx-driver-kmod-badge]][sgx-driver-kmod-link] |
+| sgx-driver      | [![sgx-driver build status][sgx-driver-badge]][sgx-driver-link]                |
+
 This repository provides [Fedora] kernel module packages for the legacy
 (out-of-tree) [Intel SGX Linux Driver].
 
@@ -96,6 +101,14 @@ everything is set up correctly.
 When the SGX driver is properly installed, you should see the green ✔ for the
 `SGX kernel device (/dev/isgx)` line.
 
+[sgx-driver-kmod-badge]:
+  https://copr.fedorainfracloud.org/coprs/tadej/sgx-driver-kmod/package/sgx-driver-kmod/status_image/last_build.png
+[sgx-driver-kmod-link]:
+  https://copr.fedorainfracloud.org/coprs/tadej/sgx-driver-kmod/package/sgx-driver-kmod/
+[sgx-driver-badge]:
+  https://copr.fedorainfracloud.org/coprs/tadej/sgx-driver-kmod/package/sgx-driver/status_image/last_build.png
+[sgx-driver-link]:
+  https://copr.fedorainfracloud.org/coprs/tadej/sgx-driver-kmod/package/sgx-driver/
 [Fedora]: https://getfedora.org/
 [Intel SGX Linux Driver]: https://github.com/intel/linux-sgx-driver
 [upstream-5.11]:
