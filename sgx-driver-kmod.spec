@@ -26,7 +26,7 @@
 
 Name: sgx-driver-kmod
 Version: 2.11
-Release: 1%{?git_date:.%{git_date}git%{git_commit_hash}}%{?dist}
+Release: 1%{?git_date:.%{git_date}git%{git_commit_hash}}%{?dist}.1
 Summary: Intel SGX kernel module
 License: GPLv2
 
@@ -85,6 +85,9 @@ done
 
 
 %changelog
+* Wed Jun 23 2021 Tadej Janež <tadej.j@nez.si> - 2.11-1.20210420git2d2b795.1
+- Update repository's README and add LICENSE file
+
 * Mon Jun 14 2021 Tadej Janež <tadej.j@nez.si> - 2.11-1.20210420git2d2b795
 - Update to upstream commit 2d2b795 (Apr 20, 2021)
 
